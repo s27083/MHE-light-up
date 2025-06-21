@@ -1,0 +1,84 @@
+
+Początkowe losowe rozwiązanie:
+💡 -1 -1 -1 -1 -1 -1
+💡 ■ 💡 ■ -1 ■ 💡
+💡 💡 -1 -1 -1 💡 💡
+💡 ■ -1 ■ -1 ■ -1
+💡 -1 💡 -1 -1 -1 💡
+-1 ■ -1 ■ -1 ■ -1
+-1 -1 -1 -1 💡 -1 -1
+
+Wynik początkowego rozwiązania: 270
+
+
+Algorytm Tabu z ograniczonym rozmiarem listy tabu (rozmiar=10):
+
+Rozwiązanie znalezione przez algorytm Tabu z ograniczonym rozmiarem listy:
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+
+Wynik: 0
+Czas wykonania: 0.01 sekund
+Czy rozwiązanie jest poprawne: True
+
+
+Algorytm Tabu z nieograniczonym rozmiarem listy tabu:
+
+Rozwiązanie znalezione przez algorytm Tabu z nieograniczonym rozmiarem listy:
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+
+Wynik: 0
+Czas wykonania: 0.01 sekund
+Czy rozwiązanie jest poprawne: True
+
+
+Algorytm Tabu z mechanizmem cofania się:
+
+Rozwiązanie znalezione przez algorytm Tabu z mechanizmem cofania się:
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+
+Wynik: 0
+Czas wykonania: 0.01 sekund
+Czy rozwiązanie jest poprawne: True
+
+
+Algorytm Tabu z nieograniczonym rozmiarem listy tabu i mechanizmem cofania się:
+
+Rozwiązanie znalezione przez algorytm Tabu z nieograniczonym rozmiarem listy i mechanizmem cofania się:
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+💡 ■ 💡 ■ 💡 ■ 💡
+💡 💡 💡 💡 💡 💡 💡
+
+Wynik: 0
+Czas wykonania: 0.01 sekund
+Czy rozwiązanie jest poprawne: True
+
+
+Porównanie wyników:
+Algorytm Tabu z ograniczonym rozmiarem listy: wynik = 0, czas = 0.01 s
+Algorytm Tabu z nieograniczonym rozmiarem listy: wynik = 0, czas = 0.01 s
+Algorytm Tabu z mechanizmem cofania się: wynik = 0, czas = 0.01 s
+Algorytm Tabu z nieograniczonym rozmiarem listy i mechanizmem cofania się: wynik = 0, czas = 0.01 s
+
+Najlepszy algorytm: Tabu z ograniczonym rozmiarem listy z wynikiem 0
