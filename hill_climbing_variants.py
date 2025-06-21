@@ -138,32 +138,4 @@ def hill_climbing_random(
         
     return best_solution
 
-# Przykład użycia dla problemu Light Up:
-"""
-Przykład użycia:
 
-from light_up import LightUpPuzzle
-from hill_climbing_variants import hill_climbing_deterministic, hill_climbing_random
-
-# Inicjalizacja łamigłówki
-puzzle = LightUpPuzzle(example_grid)
-
-# Wygeneruj losowe początkowe rozwiązanie
-initial_solution = puzzle.random_solution()
-
-# Uruchom algorytm wspinaczkowy z deterministycznym wyborem sąsiada
-solution_deterministic = hill_climbing_deterministic(
-    initial_solution=initial_solution,
-    objective_function=puzzle.objective_function,
-    get_neighbors=lambda sol: puzzle.get_neighbors(sol),
-    verbose=True
-)
-
-# Uruchom algorytm wspinaczkowy z losowym wyborem sąsiada
-solution_random = hill_climbing_random(
-    initial_solution=initial_solution,
-    objective_function=puzzle.objective_function,
-    get_neighbors=lambda sol: puzzle.get_neighbors(sol),
-    verbose=True
-)
-"""

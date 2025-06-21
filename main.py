@@ -6,7 +6,8 @@ import time
 import json
 import numpy as np
 from light_up import LightUpPuzzle
-from optimization_algorithms import hill_climbing, simulated_annealing, tabu_search, genetic_algorithm, brute_force
+from optimization_algorithms import hill_climbing, simulated_annealing, tabu_search, tabu_search_enhanced, genetic_algorithm, brute_force
+from hill_climbing_variants import hill_climbing_random
 from fixed_visualization import display_solution, get_illuminated_cells
 
 def parse_grid_from_file(file_path):
@@ -98,7 +99,7 @@ def main():
     input_group.add_argument('-i', '--stdin', action='store_true', help='Wczytaj siatkę łamigłówki ze standardowego wejścia')
     
     # Argumenty dotyczące algorytmu
-    parser.add_argument('-a', '--algorithm', choices=['hill', 'annealing', 'tabu', 'genetic', 'brute', 'all'], 
+    parser.add_argument('-a', '--algorithm', choices=['hill', 'hill_random', 'annealing', 'tabu', 'tabu_enh', 'genetic', 'brute', 'all'], 
                         default='all', help='Algorytm do użycia (domyślnie: wszystkie)')
     
     # Argumenty dotyczące wyjścia
@@ -110,6 +111,20 @@ def main():
     parser.add_argument('--max-iterations', type=int, default=1000, help='Maksymalna liczba iteracji dla algorytmów (domyślnie: 1000)')
     parser.add_argument('--max-bulbs', type=int, help='Maksymalna liczba żarówek dla algorytmu pełnego przeglądu')
     parser.add_argument('--max-combinations', type=int, default=1000000, help='Maksymalna liczba kombinacji dla algorytmu pełnego przeglądu')
+    
+    # Parametry dla algorytmu genetycznego
+    parser.add_argument('--population-size', type=int, default=20, help='Rozmiar populacji dla algorytmu genetycznego (domyślnie: 20)')
+    parser.add_argument('--crossover-method', choices=['uniform', 'one_point', 'two_point', 'pmx'], default='uniform', 
+                        help='Metoda krzyżowania dla algorytmu genetycznego (domyślnie: uniform)')
+    parser.add_argument('--mutation-method', choices=['swap', 'flip', 'insert', 'scramble'], default='swap',
+                        help='Metoda mutacji dla algorytmu genetycznego (domyślnie: swap)')
+    parser.add_argument('--termination-condition', choices=['iterations', 'time', 'fitness', 'stagnation'], default='iterations',
+                        help='Warunek zakończenia dla algorytmu genetycznego (domyślnie: iterations)')
+    parser.add_argument('--target-fitness', type=int, default=0, help='Docelowa wartość fitness dla algorytmu genetycznego (domyślnie: 0)')
+    parser.add_argument('--stagnation-limit', type=int, default=20, help='Liczba iteracji bez poprawy dla warunku stagnation (domyślnie: 20)')
+    parser.add_argument('--mutation-rate', type=float, default=0.2, help='Prawdopodobieństwo mutacji dla algorytmu genetycznego (domyślnie: 0.2)')
+    parser.add_argument('--elite-size', type=int, default=2, help='Liczba najlepszych osobników w elicie (domyślnie: 2)')
+    parser.add_argument('--max-time', type=int, default=60, help='Maksymalny czas wykonania w sekundach dla warunku time (domyślnie: 60)')
     
     args = parser.parse_args()
     
@@ -166,6 +181,13 @@ def main():
             max_iterations=args.max_iterations,
             verbose=args.verbose
         )),
+        'hill_random': ("Wspinaczka Górska (Losowy Wybór)", lambda: hill_climbing_random(
+            initial_solution=initial_solution,
+            objective_function=puzzle.objective_function,
+            get_neighbors=lambda sol: puzzle.get_neighbors(sol),
+            max_iterations=args.max_iterations,
+            verbose=args.verbose
+        )),
         'annealing': ("Symulowane Wyżarzanie", lambda: simulated_annealing(
             initial_solution=initial_solution,
             objective_function=puzzle.objective_function,
@@ -179,12 +201,30 @@ def main():
             max_iterations=args.max_iterations,
             verbose=args.verbose
         )),
+        'tabu_enh': ("Rozszerzone Przeszukiwanie z Tabu", lambda: tabu_search_enhanced(
+            initial_solution=initial_solution,
+            objective_function=puzzle.objective_function,
+            get_neighbors=lambda sol: puzzle.get_neighbors(sol),
+            tabu_list_size=20,
+            unlimited_tabu=False,
+            max_iterations=args.max_iterations,
+            max_iterations_without_improvement=100,
+            backtracking=True,
+            verbose=args.verbose
+        )),
         'genetic': ("Algorytm Genetyczny", lambda: genetic_algorithm(
-            initial_population_size=20,
+            initial_population_size=args.population_size,
             objective_function=puzzle.objective_function,
             random_solution_generator=lambda: puzzle.random_solution(),
-            termination_condition='iterations',
+            crossover_method=args.crossover_method,
+            mutation_method=args.mutation_method,
+            termination_condition=args.termination_condition,
             max_iterations=args.max_iterations,
+            max_time_seconds=args.max_time,
+            target_fitness=args.target_fitness,
+            stagnation_limit=args.stagnation_limit,
+            mutation_rate=args.mutation_rate,
+            elite_size=args.elite_size,
             verbose=args.verbose
         )),
         'brute': ("Algorytm Pełnego Przeglądu", lambda: brute_force(
